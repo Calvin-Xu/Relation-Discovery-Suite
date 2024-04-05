@@ -37,6 +37,8 @@ If you cannot answer the question, return an empty JSON object. Please provide n
         "required": ["Relationships"],
     }
 
+    RETRIES = 5
+
     def __init__(
         self,
         model_path: str,
@@ -87,7 +89,7 @@ If you cannot answer the question, return an empty JSON object. Please provide n
                 },
             ]
 
-            output, n = None, 10
+            output, n = None, self.RETRIES
             while output is None and n > 0:
                 response = self.llm.create_chat_completion(
                     messages, self.response_format, temperature=0.0

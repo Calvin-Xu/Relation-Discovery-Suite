@@ -1,20 +1,25 @@
 import json
 import networkx as nx
 import matplotlib.pyplot as plt
-from typing import Dict, Tuple, Set
+from typing import Dict, Set, Tuple
+
 
 class Relationships:
-    DEFAULT_RELATIONSHIPS = {"cause", "inhibit", "positively correlate", "negatively correlate"}
+    DEFAULT_RELATIONSHIPS = {
+        "cause",
+        "inhibit",
+        "positively correlate",
+        "negatively correlate",
+    }
 
     def __init__(self, relationship_types: Set[str] = DEFAULT_RELATIONSHIPS) -> None:
         """
         Initializes the Relationships object with a custom set of allowed relationships or a default set.
 
         :param relationship_types: A set of strings representing allowed relationship types.
-                                       If None, defaults to a predefined set of relationships.
         """
         self.relationship_types = relationship_types
-        self.relationships: Dict[Tuple[str, str, str], None] = {}
+        self.relationships: Dict[Tuple[str, str], str] = {}
 
     def add_relation(self, entity_1: str, entity_2: str, relationship: str) -> bool:
         """
@@ -29,7 +34,7 @@ class Relationships:
             print(f"Relationship type '{relationship}' is not allowed.")
             return False
 
-        self.relationships[(entity_1, entity_2, relationship)] = None
+        self.relationships[(entity_1, entity_2)] = relationship
         return True
 
     def remove_relation(self, entity_1: str, entity_2: str, relationship: str) -> bool:
@@ -42,10 +47,12 @@ class Relationships:
         :return: True if the relationship was removed, False otherwise.
         """
         try:
-            del self.relationships[(entity_1, entity_2, relationship)]
-            return True
+            if self.relationships[(entity_1, entity_2)] == relationship:
+                del self.relationships[(entity_1, entity_2)]
+                return True
         except KeyError:
-            return False
+            pass
+        return False
 
     def check_relation(self, entity_1: str, entity_2: str, relationship: str) -> bool:
         """
@@ -56,7 +63,15 @@ class Relationships:
         :param relationship: The type of relationship.
         :return: True if the relationship exists, False otherwise.
         """
-        return (entity_1, entity_2, relationship) in self.relationships
+        return self.relationships.get((entity_1, entity_2)) == relationship
+
+    def get_relationships(self) -> Dict[Tuple[str, str], str]:
+        """
+        Retrieves all relationships stored in the Relationships object, maintaining the internal dictionary structure.
+
+        :return: A dictionary with keys as a tuple of (entity_1, entity_2) and values as the relationship type.
+        """
+        return self.relationships
 
     def to_json(self) -> str:
         """
@@ -64,8 +79,11 @@ class Relationships:
 
         :return: A JSON string representing the relationships.
         """
-        relationships_list = [{"entity_1": key[0], "entity_2": key[1], "relationship": key[2]} for key in self.relationships.keys()]
-        return json.dumps(relationships_list, indent=4)
+        serializable_dict = {
+            f"{entity_1} | {entity_2}": relationship
+            for (entity_1, entity_2), relationship in self.relationships.items()
+        }
+        return json.dumps(serializable_dict, indent=4)
 
     def to_digraph(self) -> nx.DiGraph:
         """
@@ -74,11 +92,11 @@ class Relationships:
         :return: A NetworkX DiGraph representing the relationships.
         """
         G = nx.DiGraph()
-        for (entity_1, entity_2, relationship) in self.relationships:
+        for (entity_1, entity_2), relationship in self.relationships.items():
             G.add_edge(entity_1, entity_2, relationship=relationship)
         return G
 
-    def plot_digraph(self, filename: str = 'relations.png') -> None:
+    def plot_digraph(self, filename: str = "relations.png") -> None:
         """
         Plots the directed graph (DiGraph) of the relationships and saves it to a file.
 
@@ -86,5 +104,35 @@ class Relationships:
         """
         G = self.to_digraph()
         plt.figure(figsize=(10, 10))
-        nx.draw_networkx(G, arrows=True, with_labels=True, pos=nx.spring_layout(G, iterations=200))
+        nx.draw_networkx(
+            G, arrows=True, with_labels=True, pos=nx.spring_layout(G, iterations=200)
+        )
         plt.savefig(filename, dpi=300)
+
+    def __str__(self) -> str:
+        """
+        Provides a string representation of the Relationships object, listing all stored relationships.
+
+        :return: A string representing the relationships in the object.
+        """
+        if not self.relationships:
+            return "No relationships stored."
+        relationships_str_list = [
+            f"{entity_1} -> {entity_2} [{relationship}]"
+            for (entity_1, entity_2), relationship in self.relationships.items()
+        ]
+        return "\n".join(relationships_str_list)
+
+    def populate(self, relationship_tuples: Set[Tuple[str, str, str]]) -> None:
+        """
+        Clears the existing relationships and repopulates the Relationships object
+        with a new set of relationship tuples. Also updates the relationship_types.
+
+        :param relationship_tuples: A set of tuples (entity_1, entity_2, relationship_type) to repopulate the object.
+        """
+        self.relationships.clear()
+        self.relationship_types = set()
+
+        for entity_1, entity_2, relationship in relationship_tuples:
+            self.relationships[(entity_1, entity_2)] = relationship
+            self.relationship_types.add(relationship)

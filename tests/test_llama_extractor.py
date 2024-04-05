@@ -18,14 +18,21 @@ if __name__ == "__main__":
         print(f"Testing LlamaExtractor with model: {model_name}")
         extractor = LlamaExtractor(model_path=model_path)
         relationships = extractor.extract(input_data)
+        print()
         print(f"Relationships extracted from {model_name}:")
-        print(relationships.to_json())
+        print(relationships.__str__(), "\n")
 
-        benchmark_tool = Benchmark()
-        precision, recall = benchmark_tool.calculate_precision_recall(
-            input_data, relationships
+        benchmark = Benchmark(input_data, relationships)
+        precision, recall, f1 = (
+            benchmark.calculate_precision(),
+            benchmark.calculate_recall(),
+            benchmark.calculate_f1(),
         )
-        performance[model_name] = (precision, recall)
+        performance[model_name] = (precision, recall, f1)
+        print("False positives:")
+        print(benchmark.get_false_positives().__str__(), "\n")
 
-    for model_name, (precision, recall) in performance.items():
-        print(f"Model: {model_name}, Precision: {precision}, Recall: {recall}")
+    for model_name, (precision, recall, f1) in performance.items():
+        print(
+            f"Model: {model_name}, Precision: {precision}, Recall: {recall}, F1: {f1}"
+        )
