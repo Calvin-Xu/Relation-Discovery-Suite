@@ -1,0 +1,40 @@
+{
+    "title": "Unveiling the Genetic Links between Type 2 Diabetes and Alzheimer's Disease through GWAS",
+    "abstract": "This groundbreaking study investigates the genetic underpinnings of Type 2 Diabetes (T2D), Alzheimer's Disease (AD), and their potential interconnections through shared genetic pathways. By analyzing genome-wide association studies (GWAS) data from over 15,000 individuals, we identified key genetic markers that not only contribute to the risk of developing T2D but also show a significant association with the progression of AD. Notably, the gene SIRT1 was found to play a pivotal role in both conditions, wherein specific variants cause an increased risk of T2D and positively correlate with the early onset of AD. Conversely, the presence of the APOE ε4 allele, traditionally associated with AD, was observed to negatively correlate with the biomarkers of T2D. Furthermore, our findings suggest that high expression levels of the gene FOXO3 inhibit AD progression in individuals with a genetic predisposition to T2D, highlighting a novel protective genetic interaction against neurodegeneration.",
+    "entities": [
+        "Type 2 Diabetes (T2D)",
+        "Alzheimer's Disease (AD)",
+        "Genetic Markers",
+        "SIRT1 Gene",
+        "APOE ε4 Allele",
+        "FOXO3 Gene"
+    ],
+    "relationship_types": [
+        "cause",
+        "positively correlate",
+        "negatively correlate",
+        "inhibit"
+    ],
+    "relationships": [
+        {
+            "entity_1": "SIRT1 Gene",
+            "entity_2": "Type 2 Diabetes (T2D)",
+            "relationship": "cause"
+        },
+        {
+            "entity_1": "SIRT1 Gene",
+            "entity_2": "Alzheimer's Disease (AD)",
+            "relationship": "positively correlate"
+        },
+        {
+            "entity_1": "APOE ε4 Allele",
+            "entity_2": "Type 2 Diabetes (T2D)",
+            "relationship": "negatively correlate"
+        },
+        {
+            "entity_1": "FOXO3 Gene",
+            "entity_2": "Alzheimer's Disease (AD)",
+            "relationship": "inhibit"
+        }
+    ]
+}
