@@ -1,5 +1,6 @@
 from typing import List, Dict, Set
 from relation_suite.models.relationships import Relationships
+import json
 
 
 class Reading:
@@ -26,16 +27,19 @@ class Reading:
         self.relationship_types = relationship_types
         self.relationships = relationships
 
-    def to_json(self) -> Dict[str, List[str]]:
+    def to_json(self) -> str:
         """
         Converts the Reading object into a JSON serializable format.
 
         :return: A dictionary representing the Reading object.
         """
-        return {
-            "title": self.title,
-            "abstract": self.abstract,
-            "entities": self.entities,
-            "relationship_types": list(self.relationship_types),
-            "relationships": self.relationships.to_json(),
-        }
+        return json.dumps(
+            {
+                "title": self.title,
+                "abstract": self.abstract,
+                "entities": self.entities,
+                "relationship_types": list(self.relationship_types),
+                "relationships": self.relationships.to_json(),
+            },
+            indent=4,
+        )

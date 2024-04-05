@@ -4,12 +4,11 @@ from constants import *
 from relation_suite.utils.benchmark import Benchmark
 
 MODELS = {
-    "mistral7b:instruct": "/Users/calvinxu/.ollama/models/blobs/sha256-e8a35b5937a5e6d5c35d1f2a15f161e07eefe5e5bb0a3cdd42998ee79b057730",
+    "mistral7b:instruct": "/Users/calvinxu/.ollama/models/blobs/sha256-e8a35b5937a5e6d5c35d1f2a15f161e07eefe5e5bb0a3cdd42998ee79b057730"
 }
 
 if __name__ == "__main__":
-    input_data = InputData()
-    input_data.load_data(SYNTHETIC_DIR)
+    input_data = InputData(SYNTHETIC_DIR)
     # for reading in input_data.readings:
     #     print(reading.to_json())
 

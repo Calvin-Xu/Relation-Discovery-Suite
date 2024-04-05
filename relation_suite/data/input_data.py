@@ -7,19 +7,15 @@ from relation_suite.models.relationships import Relationships
 
 
 class InputData:
-    def __init__(self) -> None:
+    def __init__(self, paths: Union[str, List[str]]) -> None:
         """
         Initializes the InputData object.
-        """
-        self.readings: List[Reading] = []
-
-    def load_data(self, paths: Union[str, List[str]]) -> None:
-        """
-        Loads and parses JSON files from given path(s). Each JSON file is converted into a Reading object.
+        Loads and parses JSON files from given path(s). Each JSON file is serialized as a Reading object.
 
         :param paths: A path to a directory containing JSON files, a single JSON file path, or a list of JSON file paths.
         """
-        print(paths)
+        self.readings: List[Reading] = []
+
         if isinstance(paths, str):
             paths = [paths]  # ensure paths is always a list
 
