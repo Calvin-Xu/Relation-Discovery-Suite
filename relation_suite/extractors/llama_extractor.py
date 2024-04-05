@@ -8,9 +8,9 @@ import json
 
 
 class LlamaExtractor(Extractor):
-    DEFAULT_PROMPT = """You are an expert in determining causal and noncausal relationships from academic literature. I need your help to read a paper abstract and inform me of the relationships between the entities mentioned in the text.
+    DEFAULT_PROMPT = """You are an expert in determining causal and noncausal relationships from academic literature. I need your help to read a paper abstract and inform me of the relationships of certain types between certain entities.
 
-I will provide you with the paper's title, abstract, the types of relationships possible, and the entities you need to pay attention to. Tell me your answer in json format.
+I will provide you with the paper's title, abstract, the entities that have relationships with one another, and the types of relationships possible. Tell me your answer in json format.
 For example, if the types of relationships are {"cause", "inhibit", "positively correlate", "negatively correlate"}, and the paper says "the presence of green spaces within urban environments not only inhibits the adverse effects of air pollution on respiratory health but also positively correlates with improvements in mental well-being", then the output should be:
 {"Relationships": [{'A': 'green spaces', 'B': 'air pollution', 'Relation': 'inhibit'}, {'A': 'green spaces', 'B': 'mental well-being', 'VERB': 'positively correlate'}]}
 
