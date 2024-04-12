@@ -14,8 +14,6 @@ if __name__ == "__main__":
     input_data = InputData(SYNTHETIC_DIR + "/marine_ecology/")
     ground_truth = extract_relationships_from_input_data(input_data)
     ground_truth.plot_digraph(f"{SYNTHETIC_DIR}/marine_ecology/ground_truth.png")
-    # for reading in input_data.readings:
-    #     print(reading.to_json())
 
     performance = {}
     for model_name, model_path in MODELS.items():

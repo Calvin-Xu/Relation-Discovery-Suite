@@ -84,8 +84,14 @@ class Relationships:
         :return: A JSON string representing the relationships.
         """
         serializable_dict = {
-            f"{entity_1} | {entity_2}": relationship
-            for (entity_1, entity_2), relationship in self.relationships.items()
+            "relationships": [
+                {
+                    "entity_1": entity_1,
+                    "entity_2": entity_2,
+                    "relationship": relationship,
+                }
+                for (entity_1, entity_2), relationship in self.relationships.items()
+            ]
         }
         return json.dumps(serializable_dict, indent=4)
 
