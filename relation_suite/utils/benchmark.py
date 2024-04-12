@@ -6,6 +6,25 @@ from typing import Union, Set, Tuple
 from typing import Union, Set, Tuple, Dict
 
 
+def extract_relationships_from_input_data(input_data: InputData) -> Relationships:
+    """
+    Extracts relationships from an InputData object and returns them in a Relationships object.
+
+    :param input_data: The InputData object containing ground truth relationships.
+    :return: A Relationships object populated with the extracted relationships.
+    """
+    extracted_relationships = Relationships()
+    for reading in input_data.get_data():
+        for (
+            entity_1,
+            entity_2,
+        ), relationship in reading.relationships.get_all().items():
+            extracted_relationships.add(
+                entity_1.lower(), entity_2.lower(), relationship.lower()
+            )
+    return extracted_relationships
+
+
 class Benchmark:
     def __init__(
         self,
@@ -20,42 +39,31 @@ class Benchmark:
         :param our_result: The Relationships object to be evaluated.
         """
         if isinstance(ground_truth, InputData):
-            self.ground_truth_relationships = (
-                self._extract_relationships_from_input_data(
-                    ground_truth
-                ).get_relationships()
-            )
+            self.ground_truth_relationships = extract_relationships_from_input_data(
+                ground_truth
+            ).get_all()
         elif isinstance(ground_truth, Relationships):
-            self.ground_truth_relationships = ground_truth.get_relationships()
+            self.ground_truth_relationships = ground_truth.get_all()
         else:
             raise ValueError(
                 "ground_truth must be either an InputData or Relationships object"
             )
 
-        self.system_relationships = our_result.get_relationships()
-        self.correct_identified = {
-            (entity_1, entity_2): relationship
-            for (entity_1, entity_2), relationship in self.system_relationships.items()
-            if self.ground_truth_relationships.get((entity_1, entity_2)) == relationship
-        }
-
-    def _extract_relationships_from_input_data(
-        self, input_data: InputData
-    ) -> Relationships:
-        """
-        Extracts relationships from an InputData object and returns them in a Relationships object.
-
-        :param input_data: The InputData object containing ground truth relationships.
-        :return: A Relationships object populated with the extracted relationships.
-        """
-        extracted_relationships = Relationships()
-        for reading in input_data.get_data():
+        self.ground_truth_relationships = {
+            (entity_1.lower(), entity_2.lower()): relationship.lower()
             for (
                 entity_1,
                 entity_2,
-            ), relationship in reading.relationships.get_relationships().items():
-                extracted_relationships.add_relation(entity_1, entity_2, relationship)
-        return extracted_relationships
+            ), relationship in self.ground_truth_relationships.items()
+        }
+
+        self.system_relationships = our_result.get_all()
+        self.correct_identified = {
+            (entity_1, entity_2): relationship
+            for (entity_1, entity_2), relationship in self.system_relationships.items()
+            if self.ground_truth_relationships.get((entity_1.lower(), entity_2.lower()))
+            == relationship.lower()
+        }
 
     def calculate_precision(self) -> float:
         """
@@ -95,13 +103,13 @@ class Benchmark:
             else 0
         )
 
-    def get_false_positives(self) -> Relationships:
+    def get_fp_fn(self) -> Tuple[Relationships, Relationships]:
         """
-        Identifies the relationships that were incorrectly identified by the system,
-        i.e., the system-identified relationships that do not match the ground truth.
+        # Identifies the relationships that were incorrectly identified by the system,
+        # i.e., the system-identified relationships that do not match the ground truth.
 
-        :return: A Relationships object containing the false positives.
-        """
+        # :return: A tuple containing the false positives and false negatives as Relationships objects.
+        #"""
         ground_truth = {
             (entity_1, entity_2, relationship)
             for (
@@ -110,12 +118,15 @@ class Benchmark:
             ), relationship in self.ground_truth_relationships.items()
         }
         our_result = {
-            (entity_1, entity_2, relationship)
+            (entity_1.lower(), entity_2.lower(), relationship.lower())
             for (entity_1, entity_2), relationship in self.system_relationships.items()
         }
 
         false_positive_tuples = our_result - ground_truth
+        false_negative_tuples = ground_truth - our_result
 
         false_positives = Relationships()
         false_positives.populate(false_positive_tuples)
-        return false_positives
+        false_negatives = Relationships()
+        false_negatives.populate(false_negative_tuples)
+        return false_positives, false_negatives

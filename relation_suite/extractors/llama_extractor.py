@@ -89,8 +89,7 @@ If you cannot answer the question, return an empty JSON object. Please provide n
                 },
             ]
 
-            output, n = None, self.RETRIES
-            while output is None and n > 0:
+            for _ in range(self.RETRIES):
                 response = self.llm.create_chat_completion(
                     messages, self.response_format, temperature=0.0
                 )
@@ -99,20 +98,31 @@ If you cannot answer the question, return an empty JSON object. Please provide n
                 output = self.parse_llm_output(
                     response["choices"][0]["message"]["content"].strip()
                 )
-                n -= 1
+                for relationship in output:
+                    if (
+                        "A" in relationship
+                        and "B" in relationship
+                        and "Relation" in relationship
+                    ):
+                        break
+                    else:
+                        print("Invalid output format, regenerating...")
             print(f"Serialized: {output}")
 
             if output:
                 for relationship in output:
-                    if (
-                        relationship["Relation"] in relationships.relationship_types
-                        and relationship["A"] in reading.entities
-                        and relationship["B"] in reading.entities
-                    ):
-                        relationships.add_relation(
-                            relationship["A"],
-                            relationship["B"],
-                            relationship["Relation"],
-                        )
+                    try:
+                        if (
+                            relationship["Relation"] in relationships.relationship_types
+                            and relationship["A"] in reading.entities
+                            and relationship["B"] in reading.entities
+                        ):
+                            relationships.add(
+                                relationship["A"],
+                                relationship["B"],
+                                relationship["Relation"],
+                            )
+                    except KeyError:
+                        print("Invalid serialized format.")
 
         return relationships
