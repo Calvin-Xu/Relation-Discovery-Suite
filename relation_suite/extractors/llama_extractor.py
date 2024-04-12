@@ -104,7 +104,11 @@ If you cannot answer the question, return an empty JSON object. Please provide n
 
             if output:
                 for relationship in output:
-                    if relationship["Relation"] in relationships.relationship_types:
+                    if (
+                        relationship["Relation"] in relationships.relationship_types
+                        and relationship["A"] in reading.entities
+                        and relationship["B"] in reading.entities
+                    ):
                         relationships.add_relation(
                             relationship["A"],
                             relationship["B"],
