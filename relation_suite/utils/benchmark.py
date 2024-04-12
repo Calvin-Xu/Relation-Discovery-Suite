@@ -19,9 +19,7 @@ def extract_relationships_from_input_data(input_data: InputData) -> Relationship
             entity_1,
             entity_2,
         ), relationship in reading.relationships.get_all().items():
-            extracted_relationships.add(
-                entity_1.lower(), entity_2.lower(), relationship.lower()
-            )
+            extracted_relationships.add(entity_1, entity_2, relationship)
     return extracted_relationships
 
 
@@ -50,7 +48,7 @@ class Benchmark:
             )
 
         self.ground_truth_relationships = {
-            (entity_1.lower(), entity_2.lower()): relationship.lower()
+            (entity_1, entity_2): relationship
             for (
                 entity_1,
                 entity_2,
@@ -61,8 +59,7 @@ class Benchmark:
         self.correct_identified = {
             (entity_1, entity_2): relationship
             for (entity_1, entity_2), relationship in self.system_relationships.items()
-            if self.ground_truth_relationships.get((entity_1.lower(), entity_2.lower()))
-            == relationship.lower()
+            if self.ground_truth_relationships.get((entity_1, entity_2)) == relationship
         }
 
     def calculate_precision(self) -> float:
@@ -118,7 +115,7 @@ class Benchmark:
             ), relationship in self.ground_truth_relationships.items()
         }
         our_result = {
-            (entity_1.lower(), entity_2.lower(), relationship.lower())
+            (entity_1, entity_2, relationship)
             for (entity_1, entity_2), relationship in self.system_relationships.items()
         }
 

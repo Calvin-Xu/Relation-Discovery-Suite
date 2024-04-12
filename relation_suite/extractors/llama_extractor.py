@@ -73,7 +73,9 @@ If you cannot answer the question, return an empty JSON object. Please provide n
 
     def extract(self, input_data: InputData) -> Relationships:
         relationships = Relationships()
-        for reading in input_data.get_data():
+        n_readings = len(input_data.get_data())
+        for i, reading in enumerate(input_data.get_data()):
+            print(f"Reading {i+1}/{n_readings}: {reading.title}")
             data = {
                 "Title": reading.title,
                 "Abstract": reading.abstract,

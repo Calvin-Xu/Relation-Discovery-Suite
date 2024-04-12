@@ -36,7 +36,14 @@ if __name__ == "__main__":
         print(fp.__str__(), "\n")
         print("False negatives:")
         print(fn.__str__(), "\n")
-        relationships.plot_digraph(f"{SYNTHETIC_DIR}/marine_ecology/{model_name}.png")
+        relationships.plot_digraph(
+            f"{SYNTHETIC_DIR}/marine_ecology/{model_name}.png",
+            colored_relationships=[(fp, "orange")],
+        )
+        ground_truth.plot_digraph(
+            f"{SYNTHETIC_DIR}/marine_ecology/{model_name}_fn.png",
+            colored_relationships=[(fn, "blue")],
+        )
 
     for model_name, (precision, recall, f1) in performance.items():
         print(

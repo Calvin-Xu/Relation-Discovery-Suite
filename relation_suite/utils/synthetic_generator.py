@@ -65,6 +65,8 @@ class SyntheticGenerator:
         paper_details = json.loads(paper_response.choices[0].message.content)
         print(paper_details)
 
+        # TODO: reflect & revise step
+
         # Combine results
         result = {
             "title": paper_details["title"],
@@ -102,24 +104,21 @@ class SyntheticGenerator:
             entity_1 = relationship["entity_1"]
             entity_2 = relationship["entity_2"]
             proposed_relation = relationship["relationship"]
-            lowercase_entities = [entity.lower() for entity in self.entities]
             # check that entities and relationship type are valid
             if (
-                entity_1.lower() not in lowercase_entities
-                or entity_2.lower() not in lowercase_entities
+                entity_1 not in relationship["entities"]
+                or entity_2 not in relationship["entities"]
             ):
                 print(f"Invalid entities: {relationship}")
                 return False
-            if proposed_relation.lower() not in [
-                r.name.lower() for r in self.relationship_types
-            ]:
+            if proposed_relation not in [r.name for r in self.relationship_types]:
                 print(f"Invalid relationship type: {relationship}")
                 return False
             existing_relationship = self.generated_relationships.get(entity_1, entity_2)
             # check that relationship is consistent with existing relationships
             if (
                 existing_relationship != None
-                and existing_relationship.lower() != proposed_relation.lower()
+                and existing_relationship != proposed_relation
             ):
                 print(
                     f"Inconsistent relationship: {relationship}, {existing_relationship}"

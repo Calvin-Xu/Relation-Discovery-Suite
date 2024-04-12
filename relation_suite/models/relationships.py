@@ -1,7 +1,7 @@
 import json
 import networkx as nx
 import matplotlib.pyplot as plt
-from typing import Dict, Set, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 from relation_suite.models.relationship_type import RelationshipType
 from networkx.drawing.nx_agraph import graphviz_layout
 from math import sqrt
@@ -16,15 +16,23 @@ class Relationships:
     }
 
     def __init__(
-        self, relationship_types: Set[RelationshipType] = DEFAULT_RELATIONSHIPS
+        self,
+        relationship_types: Set[RelationshipType] = DEFAULT_RELATIONSHIPS,
+        lowercase: bool = True,
     ) -> None:
         self.relationship_types = {rel.name: rel for rel in relationship_types}
         self.relationships: Dict[Tuple[str, str], str] = {}
+        self.lowercase = lowercase
 
     def add(self, entity_1: str, entity_2: str, relationship: str) -> bool:
         if relationship not in self.relationship_types:
             print(f"Relationship type '{relationship}' is not allowed.")
             return False
+
+        if self.lowercase:
+            entity_1 = entity_1.lower()
+            entity_2 = entity_2.lower()
+            relationship = relationship.lower()
 
         rel_type = self.relationship_types[relationship]
         self.relationships[(entity_1, entity_2)] = relationship
@@ -107,12 +115,21 @@ class Relationships:
         return G
 
     def plot_digraph(
-        self, filename: str = "relations.png", figsize=None, dpi=200
+        self,
+        filename: str = "relations.png",
+        figsize: Optional[Tuple[float, float]] = None,
+        dpi: int = 200,
+        colored_relationships: Optional[List[Tuple["Relationships", str]]] = None,
     ) -> None:
         """
-        Plots the directed graph (DiGraph) of the relationships and saves it to a file.
+        Plots the directed graph (DiGraph) of the relationships and saves it to a file,
+        coloring edges based on provided specifications. If no specific colors are provided,
+        all edges are plotted in a default color.
 
+        :param colored_relationships: Optional list of tuples, each containing a Relationships instance and a color.
         :param filename: The filename to save the plot. Defaults to 'relations.png'.
+        :param figsize: The size of the figure (width, height) in inches.
+        :param dpi: The resolution of the figure in dots per inch.
         """
         G = self.to_digraph()
         if figsize is None:
@@ -125,12 +142,35 @@ class Relationships:
         else:
             pos = graphviz_layout(G, prog="dot")
 
+        # Default edge drawing
+        nx.draw_networkx_edges(
+            G, pos, edge_color="black", arrowstyle="-|>", arrowsize=20
+        )
+        if colored_relationships:
+            # Draw edges from specified Relationships instances in given colors
+            for relationships_instance, color in colored_relationships:
+                subgraph = relationships_instance.to_digraph()
+                for u, v, d in subgraph.edges(data=True):
+                    if (u, v) not in G.edges():
+                        raise ValueError(
+                            f"Edge from {u} to {v} does not exist in the main graph."
+                        )
+                    if G.edges[(u, v)]["relationship"] != d["relationship"]:
+                        raise ValueError(
+                            f"Edge from {u} to {v} has different relationship type."
+                        )
+                    nx.draw_networkx_edges(
+                        G,
+                        pos,
+                        edgelist=[(u, v)],
+                        width=2,
+                        edge_color=color,
+                        arrowstyle="-|>",
+                        arrowsize=20,
+                    )
+
         nx.draw_networkx_nodes(G, pos, node_size=2000, node_color="skyblue", alpha=0.6)
-
-        nx.draw_networkx_edges(G, pos, arrowstyle="-|>", arrowsize=20)
-
         nx.draw_networkx_labels(G, pos, font_size=20, font_family="sans-serif")
-
         edge_labels = {(u, v): d["relationship"] for u, v, d in G.edges(data=True)}
         nx.draw_networkx_edge_labels(
             G, pos, edge_labels=edge_labels, font_color="red", font_size=12
