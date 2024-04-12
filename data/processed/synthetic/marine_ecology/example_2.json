@@ -1,0 +1,44 @@
+{
+    "title": "Interconnections Between Global Climate Change, Oceanographic Dynamics, and Coastal Ecosystem Health: A Systemic Review",
+    "abstract": "This study investigates the intricate relationships and feedback mechanisms between global warming, marine nutrient fluxes, and coastal ecosystem disturbances. We explore how increased global temperatures influence ocean current systems, thereby altering aquatic environments. Specifically, we examine the causal relationship between thermal increases and the acceleration of ocean current patterns which, in turn, impact nutrient dispersion across marine biomes. Concurrently, global warming is shown to exacerbate terrestrial nutrient runoff, primarily due to intensified rainfall and altered agricultural practices. This nutrient influx directly causes eutrophication, leading to heightened occurrences of algal blooms. We further analyze how these blooms, in conjunction with altered current systems, negatively affect the stability and distribution of oceanic currents. Our findings underscore the multiple direct and indirect pathways through which climate change impacts marine and coastal systems, suggesting a complex network of influences that warrant comprehensive management strategies to mitigate ecosystem degradation.",
+    "entities": [
+        "Global warming",
+        "Algal blooms",
+        "Ocean currents",
+        "Nutrient Runoff",
+        "Eutrophication"
+    ],
+    "relationship_types": [
+        "cause",
+        "negatively correlate",
+        "positively correlate",
+        "inhibit"
+    ],
+    "relationships": [
+        {
+            "entity_1": "Global warming",
+            "entity_2": "Ocean currents",
+            "relationship": "cause"
+        },
+        {
+            "entity_1": "Global warming",
+            "entity_2": "Nutrient Runoff",
+            "relationship": "positively correlate"
+        },
+        {
+            "entity_1": "Nutrient Runoff",
+            "entity_2": "Eutrophication",
+            "relationship": "cause"
+        },
+        {
+            "entity_1": "Eutrophication",
+            "entity_2": "Algal blooms",
+            "relationship": "cause"
+        },
+        {
+            "entity_1": "Algal blooms",
+            "entity_2": "Ocean currents",
+            "relationship": "negatively correlate"
+        }
+    ]
+}
