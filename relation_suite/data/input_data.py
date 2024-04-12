@@ -41,7 +41,7 @@ class InputData:
                 # TODO: good way to incorporate a schema?
                 relationships = Relationships()
                 for relationship in data["relationships"]:
-                    relationships.add_relation(
+                    relationships.add(
                         relationship["entity_1"],
                         relationship["entity_2"],
                         relationship["relationship"],

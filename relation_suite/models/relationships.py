@@ -2,76 +2,80 @@ import json
 import networkx as nx
 import matplotlib.pyplot as plt
 from typing import Dict, Set, Tuple
+from relation_suite.models.relationship_type import RelationshipType
+from networkx.drawing.nx_agraph import graphviz_layout
+from math import sqrt
 
 
 class Relationships:
     DEFAULT_RELATIONSHIPS = {
-        "cause",
-        "inhibit",
-        "positively correlate",
-        "negatively correlate",
+        RelationshipType("cause"),
+        RelationshipType("inhibit"),
+        RelationshipType("positively correlate", is_symmetric=True),
+        RelationshipType("negatively correlate", is_symmetric=True),
     }
 
-    def __init__(self, relationship_types: Set[str] = DEFAULT_RELATIONSHIPS) -> None:
-        """
-        Initializes the Relationships object with a custom set of allowed relationships or a default set.
-
-        :param relationship_types: A set of strings representing allowed relationship types.
-        """
-        self.relationship_types = relationship_types
+    def __init__(
+        self, relationship_types: Set[RelationshipType] = DEFAULT_RELATIONSHIPS
+    ) -> None:
+        self.relationship_types = {rel.name: rel for rel in relationship_types}
         self.relationships: Dict[Tuple[str, str], str] = {}
 
-    def add_relation(self, entity_1: str, entity_2: str, relationship: str) -> bool:
-        """
-        Adds a relationship between two entities if the relationship type is allowed.
-
-        :param entity_1: The first entity in the relationship.
-        :param entity_2: The second entity in the relationship.
-        :param relationship: The type of relationship.
-        :return: True if the relationship was added, False otherwise.
-        """
+    def add(self, entity_1: str, entity_2: str, relationship: str) -> bool:
         if relationship not in self.relationship_types:
             print(f"Relationship type '{relationship}' is not allowed.")
             return False
 
+        rel_type = self.relationship_types[relationship]
         self.relationships[(entity_1, entity_2)] = relationship
+        if rel_type.is_symmetric:
+            self.relationships[(entity_2, entity_1)] = relationship
         return True
 
-    def remove_relation(self, entity_1: str, entity_2: str, relationship: str) -> bool:
-        """
-        Removes a specified relationship between two entities.
-
-        :param entity_1: The first entity in the relationship.
-        :param entity_2: The second entity in the relationship.
-        :param relationship: The type of relationship to be removed.
-        :return: True if the relationship was removed, False otherwise.
-        """
+    def remove(self, entity_1: str, entity_2: str, relationship: str) -> bool:
         try:
-            if self.relationships[(entity_1, entity_2)] == relationship:
-                del self.relationships[(entity_1, entity_2)]
+            if self.relationships.pop((entity_1, entity_2), None) == relationship:
+                if self.relationship_types[relationship].is_symmetric:
+                    self.relationships.pop((entity_2, entity_1), None)
                 return True
         except KeyError:
             pass
         return False
 
-    def check_relation(self, entity_1: str, entity_2: str, relationship: str) -> bool:
+    def check_entity(self, entity: str) -> bool:
         """
-        Checks if a specific relationship exists between two entities.
+        Checks if a specific entity exists in the relationships.
+
+        :param entity: The entity to check.
+        :return: True if the entity exists, False otherwise.
+        """
+        return any(entity in pair for pair in self.relationships.keys())
+
+    def get(self, entity_1: str, entity_2: str) -> str:
+        """
+        Retrieves the relationship between two entities.
 
         :param entity_1: The first entity in the relationship.
         :param entity_2: The second entity in the relationship.
-        :param relationship: The type of relationship.
-        :return: True if the relationship exists, False otherwise.
+        :return: The relationship type if it exists, None otherwise.
         """
-        return self.relationships.get((entity_1, entity_2)) == relationship
+        return self.relationships.get((entity_1, entity_2))
 
-    def get_relationships(self) -> Dict[Tuple[str, str], str]:
+    def get_all(self) -> Dict[Tuple[str, str], str]:
         """
         Retrieves all relationships stored in the Relationships object, maintaining the internal dictionary structure.
 
         :return: A dictionary with keys as a tuple of (entity_1, entity_2) and values as the relationship type.
         """
         return self.relationships
+
+    def get_num_relationships(self) -> int:
+        """
+        Retrieves the number of relationships stored in the Relationships object.
+
+        :return: The number of relationships stored.
+        """
+        return len(self.relationships)
 
     def to_json(self) -> str:
         """
@@ -96,18 +100,39 @@ class Relationships:
             G.add_edge(entity_1, entity_2, relationship=relationship)
         return G
 
-    def plot_digraph(self, filename: str = "relations.png") -> None:
+    def plot_digraph(
+        self, filename: str = "relations.png", figsize=None, dpi=200
+    ) -> None:
         """
         Plots the directed graph (DiGraph) of the relationships and saves it to a file.
 
         :param filename: The filename to save the plot. Defaults to 'relations.png'.
         """
         G = self.to_digraph()
-        plt.figure(figsize=(10, 10))
-        nx.draw_networkx(
-            G, arrows=True, with_labels=True, pos=nx.spring_layout(G, iterations=200)
+        if figsize is None:
+            figsize = (sqrt(len(G.nodes)) * 5, sqrt(len(G.nodes)) * 5)
+        plt.figure(figsize=figsize)
+        if self.get_num_relationships() > 50:
+            pos = graphviz_layout(
+                G, prog="neato", args="-Goverlap=false -Gsplines=true"
+            )
+        else:
+            pos = graphviz_layout(G, prog="dot")
+
+        nx.draw_networkx_nodes(G, pos, node_size=2000, node_color="skyblue", alpha=0.6)
+
+        nx.draw_networkx_edges(G, pos, arrowstyle="-|>", arrowsize=20)
+
+        nx.draw_networkx_labels(G, pos, font_size=20, font_family="sans-serif")
+
+        edge_labels = {(u, v): d["relationship"] for u, v, d in G.edges(data=True)}
+        nx.draw_networkx_edge_labels(
+            G, pos, edge_labels=edge_labels, font_color="red", font_size=12
         )
-        plt.savefig(filename, dpi=300)
+
+        plt.axis("off")
+        plt.savefig(filename, dpi=dpi)
+        plt.close()
 
     def __str__(self) -> str:
         """
