@@ -1,0 +1,22 @@
+{
+    "title": "The Impact of Declining Smoking Prevalence on the Incidence of Type 2 Diabetes: A Correlational Study",
+    "abstract": "The relationship between smoking habits and type 2 diabetes mellitus incidence has been the subject of extensive research, yet few studies have examined the effects of changes in smoking rates on the occurrence of type 2 diabetes. This study aims to explore the correlation between the declining rates of smoking and the incidence of type 2 diabetes across various populations. Utilizing longitudinal population data and controlling for potential confounders such as age, diet, and physical activity, our analysis reveals a statistically significant negative correlation between reduced smoking prevalence and type 2 diabetes incidence. This paper discusses potential physiological and societal mechanisms underlying these findings, suggesting that public health initiatives aimed at reducing smoking rates may also confer benefits in reducing the burden of type 2 diabetes. These insights have profound implications for policymakers and healthcare providers seeking dual-benefit strategies to tackle major health challenges.",
+    "entities": [
+        "decrease in smoking rates",
+        "cftr gene mutations",
+        "type 2 diabetes"
+    ],
+    "relationship_types": [
+        "cause",
+        "negatively correlate",
+        "inhibit",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "decrease in smoking rates",
+            "entity_2": "type 2 diabetes",
+            "relationship": "negatively correlate"
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "title": "Effects of mTOR Inhibition and Reduction in Smoking Prevalence on Metabolic Syndrome: A Multifaceted Study",
+    "abstract": "This study explores the impact of mammalian target of rapamycin (mTOR) inhibitors and the decline in tobacco use on the prevalence and severity of metabolic syndrome. Using a comprehensive cohort, we examined the relationship between systemic administration of mTOR inhibitors and metabolic markers commonly associated with metabolic syndrome. Concurrently, we assessed how trends in smoking cessation correlate with alterations in these metabolic markers. Our findings suggest a significant negative correlation between both the use of mTOR inhibitors and a decrease in smoking rates with the incidence and severity of metabolic syndrome. The results underscore potential therapeutic and preventive pathways that could be harnessed in the management of metabolic disorder complexities. Further investigation is warranted to explore the underlying mechanisms and to validate the interdisciplinary approach to mitigating metabolic syndrome risks.",
+    "entities": [
+        "mtor inhibitors",
+        "metabolic syndrome",
+        "decrease in smoking rates"
+    ],
+    "relationship_types": [
+        "cause",
+        "negatively correlate",
+        "inhibit",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "mtor inhibitors",
+            "entity_2": "metabolic syndrome",
+            "relationship": "negatively correlate"
+        },
+        {
+            "entity_1": "decrease in smoking rates",
+            "entity_2": "metabolic syndrome",
+            "relationship": "negatively correlate"
+        }
+    ]
+}

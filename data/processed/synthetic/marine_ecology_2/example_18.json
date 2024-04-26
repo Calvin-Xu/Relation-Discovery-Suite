@@ -1,0 +1,27 @@
+{
+    "title": "Impacts of Rising Sea Levels on Coastal Erosion and Bycatch Rates: Causal Links and Correlational Evidence",
+    "abstract": "This study explores the multifaceted impacts of increasing ocean water levels on coastal environments and marine fisheries. Through an analysis of temporal and spatial data, we ascertain that enhanced sea level rise acts as a primary driver for the exacerbation of coastal erosion. Utilizing geomorphological changes mapped across several decades, this research substantiates a strong causal relationship between progressive sea level increments and the intensification of erosive processes along sensitive shorelines. Additionally, the study investigates the association between higher sea levels and fluctuating bycatch rates in commercial fisheries. Statistical models demonstrate a positive correlation, implicating elevated sea levels in the unintended capture of non-target species during fishing operations. Our findings underscore the critical need for adaptive strategies in coastal management and fisheries practices to mitigate the impending challenges posed by continued oceanic rise. Comprehensive measures are recommended to bolster coastal resilience and reduce ecological disturbances in marine ecosystems.",
+    "entities": [
+        "intensifying coastal erosion",
+        "increase in bycatch rates",
+        "sea level rise"
+    ],
+    "relationship_types": [
+        "inhibit",
+        "positively correlate",
+        "cause",
+        "negatively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "sea level rise",
+            "entity_2": "intensifying coastal erosion",
+            "relationship": "cause"
+        },
+        {
+            "entity_1": "sea level rise",
+            "entity_2": "increase in bycatch rates",
+            "relationship": "positively correlate"
+        }
+    ]
+}

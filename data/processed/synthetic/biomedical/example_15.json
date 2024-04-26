@@ -1,0 +1,27 @@
+{
+    "title": "Divergent Roles of PIK3CA Mutations in Oncogenesis and Neurodegeneration: A Dual Perspective on Cancer Progression and Alzheimer's Disease",
+    "abstract": "The phosphatidylinositol-3-kinase catalytic alpha (PIK3CA) gene is a pivotal element in various cellular functions and has been predominantly associated with tumorigenesis. Recent studies have expanded our understanding by illustrating contrasting effects of PIK3CA mutations on cancer progression and Alzheimer's disease. This investigation explores these dual roles through a multi-dimensional analysis of genetic data and clinical outcomes. Our results confirm that PIK3CA mutations are strongly associated with enhanced cancer progression, implicating an elevated oncogenic potential in various cancer types. Conversely, in the context of neurodegeneration, these mutations appear to exert a protective effect against the development of Alzheimer's disease, suggesting a complex interaction with neuronal survival pathways. These findings highlight the multifaceted influence of PIK3CA genetic alterations and underscore the necessity for targeted therapeutic strategies that consider these opposing effects on human health.",
+    "entities": [
+        "pik3ca gene mutations",
+        "cancer progression",
+        "alzheimer's disease"
+    ],
+    "relationship_types": [
+        "cause",
+        "negatively correlate",
+        "inhibit",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "pik3ca gene mutations",
+            "entity_2": "cancer progression",
+            "relationship": "positively correlate"
+        },
+        {
+            "entity_1": "pik3ca gene mutations",
+            "entity_2": "alzheimer's disease",
+            "relationship": "negatively correlate"
+        }
+    ]
+}

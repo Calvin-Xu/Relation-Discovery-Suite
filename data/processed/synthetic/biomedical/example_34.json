@@ -1,0 +1,22 @@
+{
+    "title": "The Impact of Reduced Smoking Prevalence on Lung Cancer Rates: A Longitudinal Analysis",
+    "abstract": "This study investigates the association between decreasing prevalence of tobacco use and the incidence of lung cancer over a span of three decades. Leveraging national health data, we applied robust statistical methods to quantify the relationship between changes in smoking habits and subsequent modifications in lung cancer occurrences. The findings indicate a significant inverse correlation, with a marked decline in lung cancer cases paralleling the reduction in smoking rates. The analysis controlled for potential confounders including demographic shifts, environmental factors, and advancements in medical diagnostics. The results underline the critical role of anti-smoking campaigns and legislative action in reducing public health burdens associated with lung cancer.",
+    "entities": [
+        "decrease in smoking rates",
+        "sickle cell anemia",
+        "lung cancer incidence"
+    ],
+    "relationship_types": [
+        "cause",
+        "negatively correlate",
+        "inhibit",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "decrease in smoking rates",
+            "entity_2": "lung cancer incidence",
+            "relationship": "negatively correlate"
+        }
+    ]
+}

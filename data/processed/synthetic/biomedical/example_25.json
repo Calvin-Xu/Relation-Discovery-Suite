@@ -1,0 +1,22 @@
+{
+    "title": "Enhanced Precision in Genome Engineering: Targeting CFTR Gene Mutations through CRISPR/Cas9 Modifications",
+    "abstract": "Recent advancements in genome-editing technologies have facilitated unprecedented precision in targeting specific genetic mutations implicated in various diseases. Particularly, cystic fibrosis, primarily caused by mutations in the cystic fibrosis transmembrane conductance regulator (CFTR) gene, has been a principal target. This study explores the efficacy of customized CRISPR/Cas9 systems designed to enhance the accuracy of edits at loci corresponding to the defective CFTR gene. We demonstrate that specific modifications in the guide RNA and Cas9 nuclease enhance the fidelity of cuts and decrease off-target effects, thereby significantly inhibiting the expression of aberrant CFTR protein forms. Our results suggest that these refined editing techniques not only promise a reduced risk of unintended genetic disruptions but also pave the way for more reliable therapeutic strategies for managing cystic fibrosis at the genetic level. This research underscores the critical role of molecular precision in the realm of gene therapy and its potential to revolutionize the treatment landscape for genetic disorders.",
+    "entities": [
+        "rising obesity rates",
+        "gene editing precision",
+        "cftr gene mutations"
+    ],
+    "relationship_types": [
+        "cause",
+        "negatively correlate",
+        "inhibit",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "gene editing precision",
+            "entity_2": "cftr gene mutations",
+            "relationship": "inhibit"
+        }
+    ]
+}

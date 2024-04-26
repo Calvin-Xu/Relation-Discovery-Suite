@@ -1,0 +1,22 @@
+{
+    "title": "The Efficacy of mTOR Inhibitors in Reducing Lung Cancer Incidence: A Comprehensive Review",
+    "abstract": "The mechanistic target of rapamycin (mTOR) pathway has been identified as a crucial regulator of cellular growth, metabolism, and survival, suggesting its potential role in the progression and development of various cancers, including lung malignancies. This paper examines the effectiveness of mTOR inhibitors in curtailing the incidence of lung cancer through a systematic review and meta-analysis of clinical trials and epidemiological studies. We primarily focused on assessing the therapeutic impact of these inhibitors on lung cancer risk among diverse populations. Our findings indicate a significant reduction in lung cancer incidence among subjects treated with mTOR inhibitors compared to control groups, highlighting the potential of mTOR modulation as a preventative strategy against lung cancer. Further investigations are recommended to substantiate these results and to explore the molecular mechanisms involved in detail.",
+    "entities": [
+        "mtor inhibitors",
+        "lung cancer incidence",
+        "spread of multidrug-resistant bacteria"
+    ],
+    "relationship_types": [
+        "cause",
+        "negatively correlate",
+        "inhibit",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "mtor inhibitors",
+            "entity_2": "lung cancer incidence",
+            "relationship": "inhibit"
+        }
+    ]
+}

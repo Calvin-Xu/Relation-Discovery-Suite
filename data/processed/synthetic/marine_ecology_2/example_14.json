@@ -1,0 +1,32 @@
+{
+    "title": "Interconnected Impact: How Increasing Marine Plastic Pollution and Hypoxic Zone Expansion Affect Turtle Nesting Sites",
+    "abstract": "Recent studies indicate a troubling correlation among the rise of marine plastic debris, the growth of hypoxic (low-oxygen) areas in aquatic environments, and the consequent negative effects on sea turtle nesting habitats. This paper explores the causative role of escalating plastic pollution and its relationship with the expansion of hypoxic zones in marine ecosystems, subsequently disturbing essential nesting sites for sea turtles. Through comprehensive data analysis and field observations, we present that an increase in marine plastic waste not only leads to larger hypoxic zones due to its degradative oxygen consumption but also directly threatens the viability of beaches used by turtles for nesting purposes. Furthermore, the paper illustrates how these larger hypoxic zones exacerbate the degradation of coastal habitats, thereby amplifying the challenges faced by nesting turtles. The findings underscore the interconnected nature of environmental threats and highlight the urgent need for integrated approaches to mitigate the impact of human activities on marine biodiversity.",
+    "entities": [
+        "growth in plastic pollution",
+        "expansion of hypoxic zones",
+        "disturbance of turtle nesting sites"
+    ],
+    "relationship_types": [
+        "inhibit",
+        "positively correlate",
+        "cause",
+        "negatively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "growth in plastic pollution",
+            "entity_2": "disturbance of turtle nesting sites",
+            "relationship": "cause"
+        },
+        {
+            "entity_1": "growth in plastic pollution",
+            "entity_2": "expansion of hypoxic zones",
+            "relationship": "positively correlate"
+        },
+        {
+            "entity_1": "expansion of hypoxic zones",
+            "entity_2": "disturbance of turtle nesting sites",
+            "relationship": "positively correlate"
+        }
+    ]
+}

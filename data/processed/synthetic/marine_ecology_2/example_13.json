@@ -1,0 +1,32 @@
+{
+    "title": "Impacts of Coastal Deforestation and Rising Ocean Levels on Marine Biodiversity: A Correlative Study",
+    "abstract": "This paper explores the intricate relationships between coastal ecosystem degradation and the health of marine biodiversity. Specifically, we highlight the causative role of increased oceanic encroachment and mangrove felling in the diminution of marine species diversity. Utilizing a combination of satellite imaging, in situ observations, and historical biodiversity data, our findings reveal that escalating sea levels, primarily driven by climate change, have exacerbated marine habitat loss, subsequently driving down marine biodiversity. Simultaneously, our analysis points to an accelerated decline in coastal mangrove forests, significantly attributed to anthropogenic activities, as another critical factor negatively influencing marine species richness. Notably, our results establish not only a direct causative link between the deforestation of mangrove ecosystems and the depletion of marine life but also demonstrate a synergistic interaction with sea level rise, which itself is indirectly propagated by mangrove loss. This dual pathway elucidates the compounded threats faced by marine environments, urging for integrated conservation strategies that address both climatic and direct human impacts on coastal and marine ecosystems.",
+    "entities": [
+        "sea level rise",
+        "reduction in marine biodiversity",
+        "increasing mangrove deforestation"
+    ],
+    "relationship_types": [
+        "inhibit",
+        "positively correlate",
+        "cause",
+        "negatively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "sea level rise",
+            "entity_2": "reduction in marine biodiversity",
+            "relationship": "cause"
+        },
+        {
+            "entity_1": "increasing mangrove deforestation",
+            "entity_2": "reduction in marine biodiversity",
+            "relationship": "cause"
+        },
+        {
+            "entity_1": "increasing mangrove deforestation",
+            "entity_2": "sea level rise",
+            "relationship": "positively correlate"
+        }
+    ]
+}

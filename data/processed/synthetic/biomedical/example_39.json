@@ -1,0 +1,22 @@
+{
+    "title": "Exploring the Association Between Insulin Resistance and Oncogenic Progression: A Systematic Review and Meta-Analysis",
+    "abstract": "Recent studies have suggested a potential linkage between metabolic dysfunction, specifically insulin resistance, and enhanced malignant transformation and progression. This systematic review and meta-analysis aim to quantitatively synthesize available evidence that explores the correlation between insulin resistance and cancer progression across various carcinomas. By screening numerous databases and adhering to stringent inclusion criteria, this review compiles data from observational and experimental research that measures levels of insulin resistance and corresponding oncogenic activity. Preliminary analyses indicate a positive correlation between heightened insulin resistance and the advancement of tumor malignancy. This paper discusses the implications of insulin signaling pathways in tumorigenesis, potential mechanisms underlying this association, and the role of insulin resistance as a biomarker for cancer prognosis. Findings from this study could inform targeted therapeutic approaches and influence clinical practices regarding the management of cancer in patients with underlying metabolic conditions.",
+    "entities": [
+        "insulin resistance",
+        "cancer progression",
+        "hpv vaccination"
+    ],
+    "relationship_types": [
+        "cause",
+        "negatively correlate",
+        "inhibit",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "insulin resistance",
+            "entity_2": "cancer progression",
+            "relationship": "positively correlate"
+        }
+    ]
+}

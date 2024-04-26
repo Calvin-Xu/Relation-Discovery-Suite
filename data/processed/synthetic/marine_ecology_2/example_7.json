@@ -1,0 +1,27 @@
+{
+    "title": "Impacts of Environmental Changes and Pollution on Marine Turtle Nesting: An Analysis of Accelerated Polar Ice Melt and Increased Plastics Accumulation",
+    "abstract": "Recent observations have indicated a troubling increase in disturbances at marine turtle nesting sites, pivotal areas essential for the survival of these species. This study explores two primary environmental disturbances contributing to these disruptions: the rapid melting of polar sea ice and the escalation of plastic pollution in marine environments. Employing satellite imagery and ground surveys across several globally significant turtle nesting beaches, we quantitatively assess how these ecological disturbances are interlinked with nesting behaviors. Firstly, accelerated ice melt, potentially induced by climate change, has led to altered oceanic currents and temperatures, which in turn have been observed to affect the migratory paths of turtles and the stability of nesting beaches. Secondly, the proliferation of plastic debris not only physically obstructs these critical habitats but also introduces harmful pollutants into the ecosystem, further threatening the health and reproductive success of marine turtles. Our findings highlight the urgent need for comprehensive environmental management strategies that address both climate change effects and pollution control to safeguard these vital ecological niches.",
+    "entities": [
+        "accelerated sea ice melting",
+        "growth in plastic pollution",
+        "disturbance of turtle nesting sites"
+    ],
+    "relationship_types": [
+        "inhibit",
+        "positively correlate",
+        "cause",
+        "negatively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "accelerated sea ice melting",
+            "entity_2": "disturbance of turtle nesting sites",
+            "relationship": "cause"
+        },
+        {
+            "entity_1": "growth in plastic pollution",
+            "entity_2": "disturbance of turtle nesting sites",
+            "relationship": "cause"
+        }
+    ]
+}
