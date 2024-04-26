@@ -14,7 +14,7 @@ I will provide you with the paper's title, abstract, the entities that have rela
 For example, if the types of relationships are {"cause", "inhibit", "positively correlate", "negatively correlate"}, and the paper says "the presence of green spaces within urban environments not only inhibits the adverse effects of air pollution on respiratory health but also positively correlates with improvements in mental well-being", then the output should be:
 {"Relationships": [{'A': 'green spaces', 'B': 'air pollution', 'Relation': 'inhibit'}, {'A': 'green spaces', 'B': 'mental well-being', 'VERB': 'positively correlate'}]}
 
-If you cannot answer the question, return an empty JSON object. Please provide no explanation or justification. Just the JSON encoding.
+Be exhaustive and identify all plausible relationships. If you cannot find any or cannot answer the question, return an empty JSON object. Please provide no explanation or justification. Just the JSON encoding.
     """.strip()  # TODO: how to handle inline long prompts?
 
     DEFAULT_RESPONSE_FORMAT = {
@@ -75,7 +75,7 @@ If you cannot answer the question, return an empty JSON object. Please provide n
         relationships = Relationships()
         n_readings = len(input_data.get_data())
         for i, reading in enumerate(input_data.get_data()):
-            print(f"Reading {i+1}/{n_readings}: {reading.title}")
+            print(f"\nReading {i+1}/{n_readings}: {reading.title}")
             data = {
                 "Title": reading.title,
                 "Abstract": reading.abstract,
@@ -100,6 +100,8 @@ If you cannot answer the question, return an empty JSON object. Please provide n
                 output = self.parse_llm_output(
                     response["choices"][0]["message"]["content"].strip()
                 )
+                if output is None:
+                    continue
                 for relationship in output:
                     if (
                         "A" in relationship

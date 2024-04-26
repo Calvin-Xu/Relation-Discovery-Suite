@@ -10,10 +10,12 @@ MODELS = {
     "mistral7b:instruct": "/Users/calvinxu/.ollama/models/blobs/sha256-e8a35b5937a5e6d5c35d1f2a15f161e07eefe5e5bb0a3cdd42998ee79b057730"
 }
 
+DIR_NAME = "biomedical"
+
 if __name__ == "__main__":
-    input_data = InputData(SYNTHETIC_DIR + "/marine_ecology/")
+    input_data = InputData(SYNTHETIC_DIR + f"/{DIR_NAME}/")
     ground_truth = extract_relationships_from_input_data(input_data)
-    ground_truth.plot_digraph(f"{SYNTHETIC_DIR}/marine_ecology/ground_truth.png")
+    ground_truth.plot_digraph(f"{SYNTHETIC_DIR}/{DIR_NAME}/ground_truth.png")
 
     performance = {}
     for model_name, model_path in MODELS.items():
@@ -37,11 +39,11 @@ if __name__ == "__main__":
         print("False negatives:")
         print(fn.__str__(), "\n")
         relationships.plot_digraph(
-            f"{SYNTHETIC_DIR}/marine_ecology/{model_name}.png",
+            f"{SYNTHETIC_DIR}/{DIR_NAME}/{model_name}.png",
             colored_relationships=[(fp, "orange")],
         )
         ground_truth.plot_digraph(
-            f"{SYNTHETIC_DIR}/marine_ecology/{model_name}_fn.png",
+            f"{SYNTHETIC_DIR}/{DIR_NAME}/{model_name}_fn.png",
             colored_relationships=[(fn, "blue")],
         )
 
