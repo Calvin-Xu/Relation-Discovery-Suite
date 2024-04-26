@@ -24,6 +24,9 @@ class Relationships:
         self.relationships: Dict[Tuple[str, str], str] = {}
         self.lowercase = lowercase
 
+    def __iter__(self):
+        return self.relationships
+
     def add(self, entity_1: str, entity_2: str, relationship: str) -> bool:
         if relationship not in self.relationship_types:
             print(f"Relationship type '{relationship}' is not allowed.")
@@ -149,7 +152,8 @@ class Relationships:
         if colored_relationships:
             # Draw edges from specified Relationships instances in given colors
             for relationships_instance, color in colored_relationships:
-                subgraph = relationships_instance.to_digraph()
+                if relationships_instance:
+                    subgraph = relationships_instance.to_digraph()
                 for u, v, d in subgraph.edges(data=True):
                     if (u, v) not in G.edges():
                         raise ValueError(
@@ -194,6 +198,8 @@ class Relationships:
         ]
         return "\n".join(relationships_str_list)
 
+        return self.to_json()
+
     def populate(self, relationship_tuples: Set[Tuple[str, str, str]]) -> None:
         """
         Clears the existing relationships and repopulates the Relationships object
@@ -207,3 +213,23 @@ class Relationships:
         for entity_1, entity_2, relationship in relationship_tuples:
             self.relationships[(entity_1, entity_2)] = relationship
             self.relationship_types.add(relationship)
+
+    def from_json(self, json_str: str) -> None:
+        """
+        Imports relationships from a JSON string.
+
+        :param json_str: A JSON string representing the relationships.
+        """
+        self.relationships.clear()
+        self.relationship_types = set()
+        try:
+            data = json.loads(json_str)
+            for relationship in data["relationships"]:
+                self.relationships[
+                    (relationship["entity_1"], relationship["entity_2"])
+                ] = relationship["relationship"]
+                self.relationship_types.add(relationship["relationship"])
+        except json.JSONDecodeError:
+            print("Relationships::from_json: Invalid JSON string.")
+        except KeyError:
+            print("Relationships::from_json: Invalid serialized format.")

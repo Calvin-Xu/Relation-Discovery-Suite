@@ -1,13 +1,16 @@
-from relation_suite.extractors.llama_extractor import LlamaExtractor
 from relation_suite.data.input_data import InputData
 from constants import *
+from relation_suite.extractors.openai_extractor_baseline import OpenAIExtractorBaseline
 from relation_suite.utils.benchmark import (
     Benchmark,
     extract_relationships_from_input_data,
 )
 
 MODELS = {
-    "mistral7b:instruct": "/Users/calvinxu/.ollama/models/blobs/sha256-e8a35b5937a5e6d5c35d1f2a15f161e07eefe5e5bb0a3cdd42998ee79b057730"
+    "gpt-4-turbo": {"type": "json_object"},
+    "gpt-4o": {"type": "json_object"},
+    "gpt-4": None,
+    "gpt-3.5-turbo": {"type": "json_object"},
 }
 
 DIR_NAME = "marine_ecology_2"
@@ -18,9 +21,9 @@ if __name__ == "__main__":
     ground_truth.plot_digraph(f"{SYNTHETIC_DIR}/{DIR_NAME}/ground_truth.png")
 
     performance = {}
-    for model_name, model_path in MODELS.items():
+    for model_name in MODELS:
         print(f"Testing LlamaExtractor with model: {model_name}")
-        extractor = LlamaExtractor(model_path=model_path)
+        extractor = OpenAIExtractorBaseline(model=model_name)
         relationships = extractor.extract(input_data)
         print()
         print(f"Relationships extracted from {model_name}:")
@@ -39,11 +42,11 @@ if __name__ == "__main__":
         print("False negatives:")
         print(fn.__str__(), "\n")
         relationships.plot_digraph(
-            f"{SYNTHETIC_DIR}/{DIR_NAME}/{model_name}.png",
+            f"{SYNTHETIC_DIR}/{DIR_NAME}/{model_name}_baseline.png",
             colored_relationships=[(fp, "orange")],
         )
         ground_truth.plot_digraph(
-            f"{SYNTHETIC_DIR}/{DIR_NAME}/{model_name}_fn.png",
+            f"{SYNTHETIC_DIR}/{DIR_NAME}/{model_name}_baseline_fn.png",
             colored_relationships=[(fn, "blue")],
         )
 
