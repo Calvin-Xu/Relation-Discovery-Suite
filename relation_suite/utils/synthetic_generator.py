@@ -1,7 +1,7 @@
 import os
 import json
 import random
-from typing import List, Dict, Set
+from typing import List, Dict, Optional, Set, Tuple, Union
 from openai import OpenAI
 from relation_suite.models.relationship_type import RelationshipType
 from relation_suite.models.relationships import Relationships
@@ -30,12 +30,14 @@ class SyntheticGenerator:
 
     def _generate_example(self, selected_entities: List[str]) -> Dict:
         # Step 1: Generate Relationships
+        selected_entities = [e.lower() for e in selected_entities]
         entities_str = ", ".join(selected_entities)
         relationship_types_str = ", ".join([r.name for r in self.relationship_types])
         relationship_prompt = f"""
         Instruction: Identify plausible relationships between the following entities: {entities_str}.
         Each relationship should be one of these types: {relationship_types_str}.
-        Please provide the list of relationships in JSON format with keys 'entity_1', 'entity_2', and 'relationship'.
+        Please provide the relationships in JSON format in list called 'relationships' with keys 'entity_1', 'entity_2', and 'relationship'.
+        Only generate relationships that are plausible (generally true in non-contrived scenarios) given the entities. Return an empty list if you think there are none.
         """.strip()
 
         relationship_response = self.client.chat.completions.create(
@@ -47,6 +49,11 @@ class SyntheticGenerator:
         relationships = json.loads(relationship_response.choices[0].message.content)[
             "relationships"
         ]
+
+        if len(relationships) == 0:
+            print("No plausible relationships found.")
+            return None
+
         print(f"Generated plausible relationships: {relationships}")
 
         # Step 2: Generate Academic Paper
@@ -65,7 +72,21 @@ class SyntheticGenerator:
         paper_details = json.loads(paper_response.choices[0].message.content)
         print(paper_details)
 
-        # TODO: reflect & revise step
+        # Step 3: reflect & revise step
+        reflect_prompt = f"""
+        Instruction: You have been instructed to reate the title and abstract of a hypothetical academic paper that reports results or insights related to the following relationships: {relationships}.
+        The abstract you generated is as follows: {paper_details["abstract"]}.
+        Do you think the abstract effectively reports on the relationships between the entities? The abstract should be written in a formal, academic style, and might use synonyms or equivalent expressions to report on the relationships between the entities. However, all the relationships should be clearly and accurately represented, and evident to a reader with adequate academic background.
+        Please regenerate the abstract if you think it does not effectively report on the relationships between the entities. If it is satisfactory, say "SATISFACTORY".
+        """
+
+        reflect_response = self.client.chat.completions.create(
+            messages=[{"role": "user", "content": reflect_prompt}],
+            model=MODEL,
+        )
+        if reflect_response.choices[0].message.content != "SATISFACTORY":
+            print("Revising abstract...")
+            paper_details["abstract"] = reflect_response.choices[0].message.content
 
         # Combine results
         result = {
@@ -75,6 +96,7 @@ class SyntheticGenerator:
             "relationship_types": [r.name for r in self.relationship_types],
             "relationships": relationships,
         }
+        print(f"Generated example: {result}")
         return result
 
     def _write_json(self, data: Dict, file_name: str) -> None:
@@ -105,10 +127,7 @@ class SyntheticGenerator:
             entity_2 = relationship["entity_2"]
             proposed_relation = relationship["relationship"]
             # check that entities and relationship type are valid
-            if (
-                entity_1 not in relationship["entities"]
-                or entity_2 not in relationship["entities"]
-            ):
+            if entity_1 not in output["entities"] or entity_2 not in output["entities"]:
                 print(f"Invalid entities: {relationship}")
                 return False
             if proposed_relation not in [r.name for r in self.relationship_types]:
@@ -133,13 +152,15 @@ class SyntheticGenerator:
 
         return True
 
-    def generate_all(self, k: int, n: int) -> None:
+    def generate_all(self, k: Union[Tuple[int, int], int], n: int) -> None:
         if not self.entities:
             print("No entities loaded.")
             return
 
         for i in range(n):
             print(f"Generating example {i}...")
+            if isinstance(k, tuple):
+                k = random.randint(k[0], k[1])
             selected_entities = random.sample(self.entities, k)
             print(f"Selected entities: {selected_entities}")
             result = self._generate_example(selected_entities)
