@@ -14,6 +14,7 @@ class FindRelations(dspy.Signature):
     title = dspy.InputField()
     abstract = dspy.InputField()
     entities = dspy.InputField()
+    relation_types = dspy.InputField()
     relationships = dspy.OutputField(
         desc="""json encoding the relationships between entities present in the entities list. Entities names must be reported verbatim."""
     )
@@ -24,12 +25,13 @@ class CoT(dspy.Module):
         super().__init__()
         self.predict = dspy.ChainOfThought(FindRelations, n=num_preds)
 
-    def forward(self, title: str, abstract: str, entities: str):
+    def forward(self, title: str, abstract: str, entities: str, relation_types: str):
         _relationships = Relationships()
         answer = self.predict(
             title=title,
             abstract=abstract,
             entities=entities,
+            relation_types=relation_types,
         )
         if answer.relationships.split("\n")[0] == "```json":
             answer.relationships = "\n".join(answer.relationships.split("\n")[1:-1])
@@ -64,9 +66,9 @@ class DSPyExtractor(Extractor):
                 title=reading.title,
                 abstract=reading.abstract,
                 entities=str(reading.entities),
-                relationship_types=str(reading.relationship_types),
+                relation_types=str(reading.relationship_types),
                 relationships=reading.relationships.to_json(),
-            ).with_inputs("title", "abstract", "entities")
+            ).with_inputs("title", "abstract", "entities", "relation_types")
             for reading in training_data.get_data()
         ]
 
@@ -104,8 +106,14 @@ class DSPyExtractor(Extractor):
                 title=reading.title,
                 abstract=reading.abstract,
                 entities=str(reading.entities),
+                relation_types=str(reading.relationship_types),
             )
+            print(f"Result: {result}")
             if result.relationships:
+                if result.relationships.split("\n")[0] == "```json":
+                    result.relationships = "\n".join(
+                        result.relationships.split("\n")[1:-1]
+                    )
                 reading_relationships = Relationships()
                 reading_relationships.from_json(result.relationships)
                 for (
