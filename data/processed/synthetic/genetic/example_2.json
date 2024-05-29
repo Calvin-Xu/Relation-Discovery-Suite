@@ -1,0 +1,21 @@
+{
+    "title": "Elevated PD-1 and PD-L1 Levels: Investigating Positive Correlations in Immune Response Modulation",
+    "abstract": "Programmed cell death protein 1 (PD-1) and its ligand PD-L1 are pivotal regulators in the immune checkpoint pathway, directly influencing the suppression of immune responses in various disease models, including cancer. This study systematically investigates the correlation between PD-1 and PD-L1 expression levels across different cell types and environmental conditions. Utilizing quantitative RT-PCR, flow cytometry, and immunohistochemical analysis, our results consistently demonstrate a positive correlation between the expression levels of PD-1 and PD-L1. This relationship suggests a potential feedback mechanism whereby increased PD-1 expression may upregulate PD-L1 levels, further contributing to the modulation of immune responses. Our findings underline the importance of co-targeting PD-1 and PD-Lifecycle to enhance therapeutic strategies in oncology and autoimmune diseases. Moreover, the data provide a foundational understanding that supports ongoing clinical trials exploring dual inhibitory strategies against both PD-1 and PD-L1 in the management of resistant neoplastic diseases.",
+    "entities": [
+        "pd-1 expression",
+        "pd-l1 expression"
+    ],
+    "relationship_types": [
+        "cause",
+        "inhibit",
+        "negatively correlate",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "pd-1 expression",
+            "entity_2": "pd-l1 expression",
+            "relationship": "positively correlate"
+        }
+    ]
+}

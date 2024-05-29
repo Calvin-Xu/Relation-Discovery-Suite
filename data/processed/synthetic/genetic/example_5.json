@@ -1,0 +1,21 @@
+{
+    "title": "Inverse Correlation Between Notch1 and Apolipoprotein E Gene Expressions in Human Neural Cells",
+    "abstract": "Recent studies have increasingly focused on the genetic interplays that influence neurodegenerative disease pathways. This study examines the relationship between the NOTCH1 signaling pathway and the expression of the APOE gene, which is critically involved in lipid metabolism and neuronal health. Using quantitative PCR and knockdown approaches in cultured human neural cells, we observed a consistent negative correlation between NOTCH1 and APOE expression levels. Our results suggest that elevated NOTCH1 signaling may suppress APOE expression, hinting at a complex regulatory mechanism that could influence the pathogenesis of neurodegenerative diseases such as Alzheimer\u2019s disease. These findings may provide new insights into the genetic regulation of neurological health and disease, proposing potential targets for genetic intervention.",
+    "entities": [
+        "notch1 gene",
+        "apoe gene"
+    ],
+    "relationship_types": [
+        "cause",
+        "inhibit",
+        "negatively correlate",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "notch1 gene",
+            "entity_2": "apoe gene",
+            "relationship": "negatively correlate"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "title": "Investigating the Inverse Relationship Between PTEN Gene Activity and CTLA-4 Expression in Immune Cells",
+    "abstract": "Recent advances in molecular biology and genetics have shed light on the intricate regulatory mechanisms that govern immune response. Among these, the PTEN gene (phosphatase and tensin homolog deleted on chromosome ten) and CTLA-4 (cytotoxic T-lymphocyte-associated protein 4) play pivotal roles in modulating immune cell functions. This study explores the inverse correlation between PTEN gene activity and CTLA-4 expression within immune cells. Using both in vitro and in vivo models, we quantitatively analyzed how alterations in PTEN expression affect CTLA-4 levels on the surface of T cells. Our results demonstrate a negative correlation, suggesting that higher PTEN activity is associated with reduced CTLA-4 surface expression. This relationship was observed across various immune cell lines and confirmed through genetic modulation experiments, where overexpression of PTEN resulted in diminished CTLA-4 expression, and vice versa. These findings not only deepen our understanding of the regulatory interactions between PTEN and CTLA-4 but also hint at potential therapeutic implications for manipulating these pathways in diseases characterized by immune dysfunction.",
+    "entities": [
+        "pten gene",
+        "ctla-4 expression"
+    ],
+    "relationship_types": [
+        "cause",
+        "inhibit",
+        "negatively correlate",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "pten gene",
+            "entity_2": "ctla-4 expression",
+            "relationship": "negatively correlate"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "title": "Correlation Between FOXP3 Gene Regulation and Programmed Death-Ligand 1 Expression in Immune Responses",
+    "abstract": "SATISFACTORY\n\nThe abstract effectively represents the relationship between the FOXP3 gene and PD-L1 expression as asked in the instructional prompt. It succinctly explains their connection in a formal academic style suitable for an academic paper, focusing on how these entities positively correlate and their implications in both autoimmune diseases and cancer. This is properly highlighted with the use of appropriate methodologies like quantitative PCR and immunohistochemical analysis, making the abstract relevant and informative to an academic audience.",
+    "entities": [
+        "foxp3 gene",
+        "pd-l1 expression"
+    ],
+    "relationship_types": [
+        "cause",
+        "inhibit",
+        "negatively correlate",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "foxp3 gene",
+            "entity_2": "pd-l1 expression",
+            "relationship": "positively correlate"
+        }
+    ]
+}

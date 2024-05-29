@@ -3,8 +3,8 @@ from relation_suite.utils.synthetic_generator import SyntheticGenerator
 from constants import *
 
 generator = SyntheticGenerator(
-    ENTITIES_DIR + "/biomedical.json",
-    SYNTHETIC_DIR + "/biomedical/",
+    ENTITIES_DIR + "/desert_ecology.json",
+    SYNTHETIC_DIR + "/desert_ecology/",
     Relationships.DEFAULT_RELATIONSHIPS,
 )
-generator.generate_all(k=(2, 3), n=40)
+generator.generate_all(k=(2, 4), n=40)

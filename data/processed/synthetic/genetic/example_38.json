@@ -1,0 +1,21 @@
+{
+    "title": "Inverse Correlation between Apolipoprotein E and SRY-Box Transcription Factor 2 in Neurogenic Processes",
+    "abstract": "Understanding the genetic underpinnings of neurodevelopmental processes requires comprehensive insights into the interactions between various gene products. The apolipoprotein E gene (APOE) and the SRY-Box Transcription Factor 2 gene (SOX2) are pivotal in neurogenesis and neural stem cell maintenance, respectively. This study investigates the relationship between APOE and SOX2 expression in both in vivo and in vitro models. Our data, derived from quantitative PCR and Western blot analyses, indicate a statistically significant inverse correlation between the expression levels of APOE and SOX2. This negative correlation suggests that elevated APOE expression might be associated with a decrease in SOX2 activity, implicating a potential competitive or inhibitory interaction that could influence neurogenic differentiation pathways. These findings contribute to a deeper understanding of the molecular dynamics that regulate brain development and may offer new insights into the genetic causes of neurodevelopmental disorders.",
+    "entities": [
+        "apoe gene",
+        "sox2 gene"
+    ],
+    "relationship_types": [
+        "cause",
+        "inhibit",
+        "negatively correlate",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "apoe gene",
+            "entity_2": "sox2 gene",
+            "relationship": "negatively correlate"
+        }
+    ]
+}

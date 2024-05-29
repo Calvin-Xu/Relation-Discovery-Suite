@@ -1,0 +1,21 @@
+{
+    "title": "Inverse Correlation Between CDKN2A and ATM Gene Expressions in Human Melanoma Cells",
+    "abstract": "Understanding the genetic landscape that underpins melanoma progression is crucial for developing targeted therapies. This study investigates the relationship between CDKN2A (cyclin-dependent kinase inhibitor 2A) and ATM (ataxia telangiectasia mutated) genes, two pivotal regulators in cell cycle and DNA damage response pathways, respectively. Through quantitative PCR analysis, immunoblotting, and co-immunoprecipitation in various human melanoma cell lines, we observed an inverse correlation between the expression levels of CDKN2A and ATM. This negative association suggests a potential compensatory mechanism, where the loss or downregulation of ATM is accompanied by upregulation of CDKN2A, contributing to the complex oncogenic phenotype observed in melanoma. These findings could help elucidate the molecular basis of melanoma resistance to conventional chemotherapies and pave the way for novel therapeutic strategies targeting these pathways.",
+    "entities": [
+        "cdkn2a gene",
+        "atm gene"
+    ],
+    "relationship_types": [
+        "cause",
+        "inhibit",
+        "negatively correlate",
+        "positively correlate"
+    ],
+    "relationships": [
+        {
+            "entity_1": "cdkn2a gene",
+            "entity_2": "atm gene",
+            "relationship": "negatively correlate"
+        }
+    ]
+}

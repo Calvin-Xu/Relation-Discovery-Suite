@@ -38,6 +38,7 @@ class SyntheticGenerator:
         Each relationship should be one of these types: {relationship_types_str}.
         Please provide the relationships in JSON format in list called 'relationships' with keys 'entity_1', 'entity_2', and 'relationship'.
         Only generate relationships that are plausible (generally true in non-contrived scenarios) given the entities. Return an empty list if you think there are none.
+        You are not to generate a set of contradictory or redundant relationships. For example, if you generate "A causes B", you should not generate "B is negatively correlated with A" (contradictory) or "B is positively correlated with A" (redundant).
         """.strip()
 
         relationship_response = self.client.chat.completions.create(
@@ -52,6 +53,30 @@ class SyntheticGenerator:
 
         if len(relationships) == 0:
             print("No plausible relationships found.")
+            return None
+
+        relationship_reflect_prompt = f"""
+        Instruction: You have been instructed to perform the following task:
+        ---Previous Task---
+        {relationship_prompt}
+        ---End of Previous Task---
+        These are the relationships you generated: {relationships}.
+        Do you think these relationships are plausible and satisfactory? Are there contradictory or redundant relationships? If not, please regenerate the relationships in the same json format: in list called 'relationships' with keys 'entity_1', 'entity_2', and 'relationship'. If they are satisfactory, return an empty json object.
+        """
+        print("Revising relationships...")
+        reflect_response = self.client.chat.completions.create(
+            messages=[{"role": "user", "content": relationship_reflect_prompt}],
+            model=MODEL,
+            response_format={"type": "json_object"},
+        )
+        try:
+            serialized = json.loads(reflect_response.choices[0].message.content)
+            if serialized != {} or "relationships" not in serialized:
+                return None
+            if serialized["relationships"] != []:
+                print(f"Revised relationships: {relationships}")
+                relationships = serialized["relationships"]
+        except json.JSONDecodeError:
             return None
 
         print(f"Generated plausible relationships: {relationships}")
@@ -72,8 +97,7 @@ class SyntheticGenerator:
         paper_details = json.loads(paper_response.choices[0].message.content)
         print(paper_details)
 
-        # Step 3: reflect & revise step
-        reflect_prompt = f"""
+        abstract_reflect_prompt = f"""
         Instruction: You have been instructed to reate the title and abstract of a hypothetical academic paper that reports results or insights related to the following relationships: {relationships}.
         The abstract you generated is as follows: {paper_details["abstract"]}.
         Do you think the abstract effectively reports on the relationships between the entities? The abstract should be written in a formal, academic style, and might use synonyms or equivalent expressions to report on the relationships between the entities. However, all the relationships should be clearly and accurately represented, and evident to a reader with adequate academic background.
@@ -81,7 +105,7 @@ class SyntheticGenerator:
         """
 
         reflect_response = self.client.chat.completions.create(
-            messages=[{"role": "user", "content": reflect_prompt}],
+            messages=[{"role": "user", "content": abstract_reflect_prompt}],
             model=MODEL,
         )
         if reflect_response.choices[0].message.content != "SATISFACTORY":

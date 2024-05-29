@@ -1,0 +1,21 @@
+{
+    "title": "Impacts of Shrub Invasion on Plant Species Resilience in Semi-Arid Ecosystems",
+    "abstract": "SATISFACTORY\n\nThe abstract effectively represents the relationship between 'shrub encroachment' and 'species resilience,' clearly indicating that the proliferation of shrubs inhibits the resilience of native plant species in semi-arid environments. It maintains a formal academic tone and adequately describes the consequential changes in environmental factors such as soil composition, moisture, and light, which lead to suboptimal growth conditions for native flora. This expression stays true to the instructed relationship and delivers insight into the dynamics and impacts of shrub encroachment on biodiversity.",
+    "entities": [
+        "shrub encroachment",
+        "species resilience"
+    ],
+    "relationship_types": [
+        "negatively correlate",
+        "positively correlate",
+        "cause",
+        "inhibit"
+    ],
+    "relationships": [
+        {
+            "entity_1": "shrub encroachment",
+            "entity_2": "species resilience",
+            "relationship": "inhibit"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "title": "The Impact of Overgrazing on Biological Soil Crust Stability in Arid Ecosystems",
+    "abstract": "Biological soil crusts (biocrusts) are integral to ecosystem function in arid regions, contributing to nutrient cycling and erosion resistance. This study investigates the inhibitory effects of overgrazing on the formation and stability of these biocrusts. Through a combination of field surveys and controlled grazing experiments, we quantified the changes in crust composition and integrity across various grazing intensities. Our findings indicate that heavy grazing pressure compromises crust formation by disrupting the microbial and physical structures essential for crust development. These disturbances, in turn, exacerbate soil degradation and increase susceptibility to desertification. This research highlights the ecological ramifications of unsustainable grazing practices and underscores the need for integrated management strategies to preserve soil health in arid landscapes.",
+    "entities": [
+        "overgrazing",
+        "desert crust formation"
+    ],
+    "relationship_types": [
+        "negatively correlate",
+        "positively correlate",
+        "cause",
+        "inhibit"
+    ],
+    "relationships": [
+        {
+            "entity_1": "overgrazing",
+            "entity_2": "desert crust formation",
+            "relationship": "inhibit"
+        }
+    ]
+}
