@@ -3,6 +3,8 @@ import tiktoken
 import numpy as np
 from collections import defaultdict
 
+# from https://github.com/openai/openai-cookbook/blob/main/examples/Chat_finetuning_data_prep.ipynb
+
 
 class OpenAIFinetuneDataCheck:
     def __init__(self, data_path):
@@ -124,7 +126,7 @@ class OpenAIFinetuneDataCheck:
             f"\n{n_too_long} examples may be over the {self.MAX_TOKENS_PER_EXAMPLE} token limit, they will be truncated during fine-tuning"
         )
 
-    def estimate_cost(self):
+    def estimate_cost(self, price_per_million_tokens=None):
         n_train_examples = len(self.dataset)
         n_epochs = self.TARGET_EPOCHS
         if n_train_examples * self.TARGET_EPOCHS < self.MIN_TARGET_EXAMPLES:
@@ -146,3 +148,6 @@ class OpenAIFinetuneDataCheck:
         print(
             f"By default, you'll be charged for ~{n_epochs * n_billing_tokens_in_dataset} tokens"
         )
+        if price_per_million_tokens:
+            cost = price_per_million_tokens * n_billing_tokens_in_dataset / 1e6
+            print(f"Estimated cost: ${cost:.2f}")
