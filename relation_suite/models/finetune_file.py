@@ -3,22 +3,26 @@ import json
 from typing import List, Dict
 
 
-class FinetuneFileGenerator:
+class FinetuneFile:
     def __init__(
         self,
+        output_path: str,
+        dir_paths: List[str],
         system_prompt: str,
         user_template: str,
         assistant_template: str,
         keys: List[str],
     ):
+        self.output_path = output_path
+        self.dir_paths = dir_paths
         self.system_prompt = system_prompt
         self.user_template = user_template
         self.assistant_template = assistant_template
         self.keys = keys
 
-    def collect_json_files(self, dir_paths: List[str]) -> List[str]:
+    def collect_json_files(self) -> List[str]:
         json_files = []
-        for dir_path in dir_paths:
+        for dir_path in self.dir_paths:
             for root, _, files in os.walk(dir_path):
                 for file in files:
                     if file.endswith(".json"):
@@ -32,9 +36,9 @@ class FinetuneFileGenerator:
         content_values = {}
         try:
             for key in self.keys:
-                # serialize the 'relationships' data into JSON format string if it's the key
-                # otherwise Python dicts have single quotes, which is not valid JSON
                 if key == "relationships":
+                    # serialize the 'relationships' data into JSON format string if it's the key
+                    # otherwise Python dicts have single quotes, which is not valid JSON
                     content_values[key] = json.dumps(data[key])
                 else:
                     content_values[key] = data[key]
@@ -52,9 +56,9 @@ class FinetuneFileGenerator:
             ]
         }
 
-    def generate_finetune_file(self, dir_paths: List[str], output_file: str):
-        json_files = self.collect_json_files(dir_paths)
-        with open(output_file, "w") as outfile:
+    def generate(self):
+        json_files = self.collect_json_files()
+        with open(self.output_path, "w") as outfile:
             for json_file in json_files:
                 try:
                     example = self.process_json_file(json_file)

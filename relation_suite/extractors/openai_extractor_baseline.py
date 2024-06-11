@@ -9,14 +9,13 @@ import json
 
 
 class OpenAIExtractorBaseline(Extractor):
-    DEFAULT_PROMPT = """You are an expert in determining causal and noncausal relationships from academic literature. I need your help to read a paper abstract and inform me of the relationships of certain types between certain entities.
+    DEFAULT_PROMPT = """You are an expert in determining causal and noncausal relationships from academic literature. The user needs your help to read a paper abstract and extract the relationships of certain types between certain entities.
 
-I will provide you with the paper's title, abstract, the entities that have relationships with one another, and the types of relationships possible. Tell me your answer in json format.
+The user will provide you with the paper's title, abstract, the entities that have relationships with one another, and the types of relationships possible. Report your answer in json format.
 For example, if the types of relationships are {"cause", "inhibit", "positively correlate", "negatively correlate"}, and the paper says "the presence of green spaces within urban environments not only inhibits the adverse effects of air pollution on respiratory health but also positively correlates with improvements in mental well-being", then the output should be:
-{"Relationships": [{"A": "green spaces", "B": "air pollution", "Relation": "inhibit"}, {"A": "green spaces", "B": "mental well-being", "Relation": "positively correlate"}]}
+{"Relationships": [{"entity_1": "green spaces", "entity_2": "air pollution", "relationship": "inhibit"}, {"entity_1": "green spaces", "entity_2": "mental well-being", "relationship": "positively correlate"}]}
 
-Be exhaustive and identify all plausible relationships. If you cannot find any or cannot answer the question, return an empty JSON object. Please provide no explanation or justification. Just the JSON encoding.
-    """.strip()
+Be exhaustive and identify all plausible relationships.""".strip()
 
     # DEFAULT_RESPONSE_FORMAT = {
     #     "type": "object",
@@ -101,9 +100,9 @@ Be exhaustive and identify all plausible relationships. If you cannot find any o
                 success = False
                 for relationship in output:
                     if (
-                        "A" in relationship
-                        and "B" in relationship
-                        and "Relation" in relationship
+                        "entity_1" in relationship
+                        and "entity_2" in relationship
+                        and "relationship" in relationship
                     ):
                         success = True
                         break
@@ -117,14 +116,15 @@ Be exhaustive and identify all plausible relationships. If you cannot find any o
                 for relationship in output:
                     try:
                         if (
-                            relationship["Relation"] in relationships.relationship_types
-                            and relationship["A"] in reading.entities
-                            and relationship["B"] in reading.entities
+                            relationship["relationship"]
+                            in relationships.relationship_types
+                            and relationship["entity_1"] in reading.entities
+                            and relationship["entity_2"] in reading.entities
                         ):
                             relationships.add(
-                                relationship["A"],
-                                relationship["B"],
-                                relationship["Relation"],
+                                relationship["entity_1"],
+                                relationship["entity_2"],
+                                relationship["relationship"],
                             )
                     except KeyError:
                         print("Invalid serialized format.")

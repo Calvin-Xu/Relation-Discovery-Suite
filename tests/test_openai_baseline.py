@@ -8,12 +8,15 @@ from relation_suite.utils.benchmark import (
 
 MODELS = {
     "gpt-4-turbo": {"type": "json_object"},
-    "gpt-4o": {"type": "json_object"},
-    "gpt-4": None,
+    # "gpt-4o": {"type": "json_object"},
+    # "gpt-4": None,
     "gpt-3.5-turbo": {"type": "json_object"},
+    "ft:gpt-3.5-turbo-1106:syrgkanislab:relation-ft-3-2:9VEjEX91": {
+        "type": "json_object"
+    },
 }
 
-DIR_NAME = "marine_ecology_2"
+DIR_NAME = "desert_ecology"
 
 if __name__ == "__main__":
     input_data = InputData(SYNTHETIC_DIR + f"/{DIR_NAME}/")

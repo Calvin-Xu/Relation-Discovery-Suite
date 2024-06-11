@@ -2,9 +2,9 @@ from openai import OpenAI
 
 client = OpenAI()
 
-client.files.create(
-    file=open("relationship_finetune_1.jsonl", "rb"), purpose="fine-tune"
-)
+# client.files.create(
+#     file=open("data/relationship_finetune_1.jsonl", "rb"), purpose="fine-tune"
+# )
 
 print(client.files.list())
 
