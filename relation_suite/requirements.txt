@@ -67,7 +67,7 @@ sortedcontainers==2.4.0
 SQLAlchemy==2.0.29
 structlog==24.1.0
 tiktoken==0.7.0
-tqdm==4.66.2
+tqdm==4.66.3
 trio==0.25.1
 trio-websocket==0.11.1
 typing_extensions==4.10.0
